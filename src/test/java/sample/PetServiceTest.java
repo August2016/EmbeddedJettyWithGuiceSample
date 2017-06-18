@@ -1,5 +1,9 @@
 package sample;
 
+import infrastructure.FetchPet;
+import infrastructure.PetRepository;
+import infrastructure.Repository;
+import infrastructure.StubFetchPet;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,6 +18,7 @@ public class PetServiceTest {
     @Before
     public void shouldAcceptFetchObject() {
 
+        // this is an external resource dependent class so we stub it
         FetchPet fetchPet = new StubFetchPet();
 
         repository = new PetRepository();

@@ -1,4 +1,6 @@
-package sample;
+package infrastructure;
+
+import sample.Pet;
 
 public interface Repository {
     Pet get(String xyz);

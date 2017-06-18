@@ -1,4 +1,6 @@
-package sample;
+package infrastructure;
+
+import sample.Pet;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +15,7 @@ public class PetRepository implements Repository {
     }
 
     public void save(Pet pet) {
+        System.out.println("saving pet " + pet.getType() + " to database");
         petMap.put(pet.getId(), pet);
     }
 }

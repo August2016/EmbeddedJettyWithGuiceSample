@@ -1,5 +1,8 @@
 package sample;
 
+import infrastructure.FetchPet;
+import infrastructure.Repository;
+
 public class PetService {
     private final FetchPet fetchPet;
     private final Repository repository;
