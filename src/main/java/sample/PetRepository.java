@@ -1,7 +1,18 @@
 package sample;
 
-public interface PetRepository {
-    Domain get(String xyz);
+import java.util.HashMap;
+import java.util.Map;
 
-    void save(Domain d);
+public class PetRepository implements Repository {
+
+    private Map<String, Pet> petMap = new HashMap<>(2);
+
+    public Pet get(String id) {
+
+        return petMap.get(id);
+    }
+
+    public void save(Pet pet) {
+        petMap.put(pet.getId(), pet);
+    }
 }
