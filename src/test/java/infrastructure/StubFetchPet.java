@@ -1,6 +1,5 @@
 package infrastructure;
 
-import infrastructure.FetchPet;
 import sample.Pet;
 
 public class StubFetchPet implements FetchPet {

@@ -1,13 +1,15 @@
 package sample;
 
+import com.google.inject.Inject;
 import infrastructure.FetchPet;
-import infrastructure.Repository;
+import infrastructure.PetRepository;
 
 public class PetService {
     private final FetchPet fetchPet;
-    private final Repository repository;
+    private final PetRepository repository;
 
-    public PetService(FetchPet fetchPet, Repository repository) {
+    @Inject
+    public PetService(FetchPet fetchPet, PetRepository repository) {
 
         this.fetchPet = fetchPet;
         this.repository = repository;

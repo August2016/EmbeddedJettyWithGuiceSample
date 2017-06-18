@@ -1,8 +1,6 @@
 package infrastructure;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
-import infrastructure.FetchPet;
-import infrastructure.HttpFetchPet;
 import org.junit.Rule;
 import org.junit.Test;
 import sample.Pet;
@@ -28,7 +26,7 @@ public class FetchPetIntegrationTest {
     public void shouldMakeHttpRequest() throws Exception {
 
         id = "2";
-        FetchPet testSubject = getFetchPet();
+        FetchPet testSubject = getFetchPetMock();
 
         Pet pet = testSubject.fetch(id);
 
@@ -37,7 +35,7 @@ public class FetchPetIntegrationTest {
         assertThat(pet.getPrice(), is(new BigDecimal("249.99")));
     }
 
-    private FetchPet getFetchPet() {
+    private FetchPet getFetchPetMock() {
 
         stubFor(get(urlEqualTo(HttpFetchPet.PATH + id))
             .willReturn(aResponse()
