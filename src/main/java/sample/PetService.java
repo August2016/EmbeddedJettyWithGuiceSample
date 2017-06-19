@@ -15,8 +15,9 @@ public class PetService {
         this.repository = repository;
     }
 
-    public void process(String xyz) {
-        Pet d = fetchPet.fetch(xyz);
+    public void process(String id) {
+
+        Pet d = fetchPet.fetch(id);
         repository.save(d);
     }
 }

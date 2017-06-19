@@ -2,7 +2,7 @@ package infrastructure;
 
 import com.google.inject.AbstractModule;
 
-public class MockHttpPetModule extends AbstractModule {
+public class StubHttpPetModule extends AbstractModule {
     /**
      * Configures a {@link Binder} via the exposed methods.
      */

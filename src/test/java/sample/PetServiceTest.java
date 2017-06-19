@@ -1,8 +1,8 @@
 package sample;
 
 import com.google.inject.Inject;
-import infrastructure.MockHttpPetModule;
 import infrastructure.PetRepository;
+import infrastructure.StubHttpPetModule;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -12,7 +12,7 @@ import static org.junit.Assert.assertThat;
 public class PetServiceTest {
 
     @Rule
-    public GuicyRule guicyRule = new GuicyRule(PetModule.class, MockHttpPetModule.class);
+    public GuicyRule guicyRule = new GuicyRule(PetModule.class, StubHttpPetModule.class);
 
     private String id = "2";
 

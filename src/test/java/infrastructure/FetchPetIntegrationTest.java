@@ -1,8 +1,10 @@
 package infrastructure;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import com.google.inject.Inject;
 import org.junit.Rule;
 import org.junit.Test;
+import sample.GuicyRule;
 import sample.Pet;
 
 import java.math.BigDecimal;
@@ -17,16 +19,25 @@ import static org.junit.Assert.assertThat;
 
 
 public class FetchPetIntegrationTest {
+    // REW: better to move this into guice rather than junit rule ?
+    @Rule
+    public WireMockRule wireMockRule = new WireMockRule(wireMockConfig().port(8091));
 
     @Rule
-    public WireMockRule wireMockRule = new WireMockRule(wireMockConfig().dynamicPort());
+    public GuicyRule guicyRule = new GuicyRule(
+        HttpPetModule.class,
+        WireMockHttpConfigModule.class);
+
+    @Inject
+    private FetchPet testSubject;
+
     private String id;
 
     @Test
     public void shouldMakeHttpRequest() throws Exception {
 
         id = "2";
-        FetchPet testSubject = getFetchPetMock();
+        configureWireMock();
 
         Pet pet = testSubject.fetch(id);
 
@@ -35,7 +46,8 @@ public class FetchPetIntegrationTest {
         assertThat(pet.getPrice(), is(new BigDecimal("249.99")));
     }
 
-    private FetchPet getFetchPetMock() {
+    // REW: can we get this into guice as well ?
+    private void configureWireMock() {
 
         stubFor(get(urlEqualTo(HttpFetchPet.PATH + id))
             .willReturn(aResponse()
@@ -49,7 +61,7 @@ public class FetchPetIntegrationTest {
             )
         );
 
-        int portOverride = wireMockRule.port();
-        return new HttpFetchPet(portOverride);
+//        int portOverride = wireMockRule.port();
+//        return new HttpFetchPet(portOverride);
     }
 }

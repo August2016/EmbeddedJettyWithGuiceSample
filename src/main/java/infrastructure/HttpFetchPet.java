@@ -3,6 +3,7 @@ package infrastructure;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
+import com.google.inject.Inject;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 import sample.Pet;
@@ -12,37 +13,28 @@ import java.io.InputStream;
 
 public class HttpFetchPet implements FetchPet {
 
-    private JsonFactory jsonFactory = new JsonFactory();
-    private static final String HTTP_GET_PET = "http://${host}:${port}";
+    private final GetMethod get;
+    private final JsonFactory jsonFactory = new JsonFactory();
     static final String PATH = "/petstore/pets/";
-    private String requestUri;
 
-    HttpFetchPet(int portOverride) {
-        requestUri = HTTP_GET_PET
-            .replace("${host}", "localhost")
-            .replace("${port}", ""+portOverride);
+    @Inject
+    HttpFetchPet(GetMethod get) {
+
+        this.get = get;
     }
-
-    public HttpFetchPet() {
-        requestUri = HTTP_GET_PET
-            .replace("${host}", "petstore-demo-endpoint.execute-api.com")
-            .replace("${port}", "");
-
-    }
-
 
     @Override
     public Pet fetch(String id) {
 
         // build the request uri
-        String uri = requestUri + PATH + id;
+        // String uri = requestUri + PATH + id;
+        get.setPath(PATH + id);
 
-        GetMethod get = new GetMethod(uri);
 
-        HttpClient httpClient = new HttpClient();
         try {
-            int respnseCode = httpClient.executeMethod(get);
-            if (respnseCode == 200) {
+            HttpClient httpClient = new HttpClient();
+            int responseCode = httpClient.executeMethod(get);
+            if (responseCode == 200) {
                 InputStream responseBodyAsStream = get.getResponseBodyAsStream();
 
                 return parseResponse(responseBodyAsStream);
@@ -54,6 +46,7 @@ public class HttpFetchPet implements FetchPet {
         return null;
     }
 
+    // REW: this belongs in a separate class
     private Pet parseResponse(InputStream responseStream) throws IOException {
 
         JsonParser parser = jsonFactory.createParser(responseStream);
