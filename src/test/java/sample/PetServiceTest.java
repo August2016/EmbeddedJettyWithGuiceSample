@@ -28,4 +28,12 @@ public class PetServiceTest {
 
         assertThat(repository.get(id).getId(), is(id));
     }
+
+    @Test
+    public void shouldReturnAPet() {
+
+        Pet pet = testSubject.process(id);
+
+        assertThat(pet.getId(), is(id));
+    }
 }

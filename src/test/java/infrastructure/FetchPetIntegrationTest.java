@@ -25,7 +25,7 @@ public class FetchPetIntegrationTest {
 
     @Rule
     public GuicyRule guicyRule = new GuicyRule(
-        HttpPetModule.class,
+        PetHttpModule.class,
         WireMockHttpConfigModule.class);
 
     @Inject
@@ -60,8 +60,5 @@ public class FetchPetIntegrationTest {
                     "}")
             )
         );
-
-//        int portOverride = wireMockRule.port();
-//        return new HttpFetchPet(portOverride);
     }
 }

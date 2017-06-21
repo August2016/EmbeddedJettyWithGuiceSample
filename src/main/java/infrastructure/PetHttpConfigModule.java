@@ -4,7 +4,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import org.apache.commons.httpclient.methods.GetMethod;
 
-public class HttpConfigModule extends AbstractModule {
+public class PetHttpConfigModule extends AbstractModule {
     /**
      * Configures a {@link Binder} via the exposed methods.
      */
